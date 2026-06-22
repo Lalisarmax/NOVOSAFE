@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeCare · Cuidados em Casa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0b2b40;
+            --primary-light: #1a4b66;
+            --secondary: #3a7ca5;
+            --gray-100: #f5f8fa;
+            --gray-200: #e9edf0;
+            --gray-300: #cbd5dc;
+            --gray-600: #4a5b66;
+            --gray-800: #1f2a33;
+            --white: #ffffff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 30px rgba(0, 20, 30, 0.08);
+            --shadow-lg: 0 20px 50px rgba(0, 20, 30, 0.12);
+            --radius: 12px;
+            --transition: 0.25s ease;
+            --green: #27ae60;
+            --red: #e74c3c;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+            background-color: rgba(255, 255, 255, 0.92);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .logo i {
+            color: var(--secondary);
+            font-size: 1.8rem;
+        }
+        .logo-subtitle {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            letter-spacing: 0.3px;
+            background: var(--gray-200);
+            padding: 2px 12px;
+            border-radius: 40px;
+            margin-left: 6px;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-list a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        .nav-list a:hover {
+            color: var(--primary);
+        }
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        .nav-list a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .nav-list a.active::after {
+            width: 100%;
+        }
+        .nav-list .btn-cadastro {
+            background: var(--primary);
+            color: white !important;
+            padding: 6px 18px;
+            border-radius: 40px;
+            transition: var(--transition);
+        }
+        .nav-list .btn-cadastro:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        .nav-list .btn-cadastro::after {
+            display: none;
+        }
+
+        /* ===== MENU PAINEL (oculto por padrão) ===== */
+        #painelMenu {
+            display: none;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 56px 0 48px;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--gray-600);
+            margin-bottom: 28px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+        }
+
+        .hero-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px 40px;
+            margin-bottom: 32px;
+        }
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+        .hero-feature i {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(11, 43, 64, 0.15);
+        }
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(11, 43, 64, 0.2);
+        }
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+        .btn-secondary:hover {
+            background: var(--gray-300);
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: var(--green);
+            color: white;
+        }
+        .btn-success:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px 60px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        /* ===== BENEFITS ===== */
+        .benefits {
+            padding: 48px 0 40px;
+            background: var(--gray-100);
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 28px;
+        }
+        .benefit-card {
+            background: var(--white);
+            padding: 28px 24px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(0,0,0,0.02);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gray-200);
+        }
+        .benefit-icon {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+        .benefit-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .benefit-card p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* ===== SOBRE - RESUMO NA PÁGINA INICIAL ===== */
+        .about-summary {
+            padding: 56px 0 48px;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .about-summary .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .about-summary .section-subtitle {
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .summary-text p {
+            color: var(--gray-600);
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+        }
+
+        .summary-text .values-mini {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .summary-text .values-mini .item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            padding: 8px 12px;
+            background: var(--gray-100);
+            border-radius: var(--radius);
+        }
+
+        .summary-text .values-mini .item i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .summary-image {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius);
+            padding: 40px 32px;
+            color: white;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .summary-image .icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .summary-image h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .summary-image p {
+            opacity: 0.85;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .btn-ver-sobre {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+
+        .btn-ver-sobre:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(11, 43, 64, 0.2);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--white);
+            padding: 28px 0;
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        .footer span {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .nav-list {
+                gap: 16px;
+                justify-content: center;
+            }
+            .hero h2 {
+                font-size: 2rem;
+            }
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .hero-stats {
+                gap: 20px 40px;
+            }
+            .summary-text .values-mini {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+            .hero-features {
+                gap: 12px;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .hero-cta {
+                flex-direction: column;
+            }
+            .nav-list {
+                gap: 12px;
+            }
+            .nav-list a {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i> HomeCare
+                <span class="logo-subtitle">SafeLife</span>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="servicos.html"><i class="fas fa-briefcase"></i> Serviços</a></li>
+                    <li><a href="sobre.html"><i class="fas fa-users"></i> Sobre</a></li>
+                    <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+                    
+                    <!-- Painel - SÓ APARECE SE ESTIVER LOGADO -->
+                    <li id="painelMenu">
+                        <a href="painel-cuidador.html" id="painelLink"><i class="fas fa-clipboard-list"></i> Painel</a>
+                    </li>
+                    
+                    <li id="loginMenu"><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li id="logoutMenu" style="display: none;">
+                        <a href="#" onclick="logout()" style="color: var(--red);">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                    <li><a href="cadastro.html" class="btn-cadastro"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Cuidados de Qualidade no Conforto do Seu Lar</h2>
+                <p class="hero-subtitle">Profissionais dedicados, atendimento humanizado e excelência em cuidados domiciliares.</p>
+
+                <div class="hero-features">
+                    <div class="hero-feature"><i class="fas fa-user-md"></i> Profissionais Qualificados</div>
+                    <div class="hero-feature"><i class="fas fa-clock"></i> Atendimento 24h</div>
+                    <div class="hero-feature"><i class="fas fa-home"></i> No Conforto do Lar</div>
+                </div>
+
+                <div class="hero-cta">
+                    <a href="agendar-consulta.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Agendar Consulta</a>
+                    <a href="servicos.html" class="btn btn-secondary"><i class="fas fa-arrow-right"></i> Ver Serviços</a>
+                    <a href="painel-cuidador.html" class="btn btn-success"><i class="fas fa-clipboard-list"></i> Acessar Painel</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Pacientes Atendidos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Profissionais</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Satisfação</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BENEFITS ===== -->
+    <section class="benefits">
+        <div class="container">
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3>Humanização</h3>
+                    <p>Tratamento humanizado e personalizado para cada paciente.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-award"></i></div>
+                    <h3>Qualidade</h3>
+                    <p>Standards de qualidade elevados em todos os serviços.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Confiança</h3>
+                    <p>Equipe comprometida com o bem-estar do paciente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SOBRE - RESUMO ===== -->
+    <section id="sobre" class="about-summary">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-users" style="color: var(--secondary); margin-right: 12px;"></i>Sobre Nós</h2>
+            <p class="section-subtitle">
+                Conheça um pouco da nossa história, missão e valores. Clique no botão para saber mais.
+            </p>
+
+            <div class="summary-grid">
+                <div class="summary-text">
+                    <p>
+                        A <strong>HomeCare</strong> é uma empresa dedicada a oferecer cuidados de saúde de excelência 
+                        no conforto do lar. Fundada com o propósito de humanizar o atendimento médico, nossa equipe 
+                        é formada por profissionais altamente qualificados e apaixonados pelo que fazem.
+                    </p>
+                    <p>
+                        Acreditamos que o cuidado vai além do tratamento médico. Por isso, oferecemos um acompanhamento 
+                        completo que considera as necessidades físicas, emocionais e sociais de cada paciente e sua família.
+                    </p>
+
+                    <div class="values-mini">
+                        <div class="item"><i class="fas fa-heart"></i> Humanização</div>
+                        <div class="item"><i class="fas fa-star"></i> Qualidade</div>
+                        <div class="item"><i class="fas fa-handshake"></i> Confiança</div>
+                        <div class="item"><i class="fas fa-lock"></i> Ética</div>
+                    </div>
+
+                    <a href="sobre.html" class="btn-ver-sobre">
+                        <i class="fas fa-arrow-right"></i> Conheça mais sobre nós
+                    </a>
+                </div>
+
+                <div class="summary-image">
+                    <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>+10 anos de experiência</h3>
+                    <p>Atendendo com excelência e humanização em cuidados domiciliares.</p>
+                    <div style="margin-top: 16px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <div>
+                            <strong style="font-size: 1.5rem; display: block;">500+</strong>
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Pacientes</span>
+                        </div>
+                        <div>
+                            <strong style="font-size: 1.5rem; display: block;">50+</strong>
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Profissionais</span>
+                        </div>
+                        <div>
+                            <strong style="font-size: 1.5rem; display: block;">98%</strong>
+                            <span style="font-size: 0.8rem; opacity: 0.8;">Satisfação</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 <span>HomeCare</span> · Cuidado que transforma vidas</p>
+            <p style="font-size: 0.8rem; margin-top: 4px; opacity: 0.7;">
+                <i class="fas fa-map-pin" style="margin-right: 4px;"></i> Atendimento humanizado · Excelência em cuidados
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+            const userType = localStorage.getItem('userType');
+            
+            const painelMenu = document.getElementById('painelMenu');
+            const loginMenu = document.getElementById('loginMenu');
+            const logoutMenu = document.getElementById('logoutMenu');
+            const painelLink = document.getElementById('painelLink');
+
+            if (isLoggedIn) {
+                if (painelMenu) painelMenu.style.display = 'block';
+                if (painelLink) {
+                    if (userType === 'cuidador') {
+                        painelLink.href = 'painel-cuidador.html';
+                        painelLink.innerHTML = '<i class="fas fa-clipboard-list"></i> Painel do Cuidador';
+                    } else if (userType === 'paciente') {
+                        painelLink.href = 'paciente-visualizacao.html';
+                        painelLink.innerHTML = '<i class="fas fa-clipboard-list"></i> Meu Acompanhamento';
+                    }
+                }
+                if (loginMenu) loginMenu.style.display = 'none';
+                if (logoutMenu) logoutMenu.style.display = 'block';
+            } else {
+                if (painelMenu) painelMenu.style.display = 'none';
+                if (loginMenu) loginMenu.style.display = 'block';
+                if (logoutMenu) logoutMenu.style.display = 'none';
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('userLoggedIn');
+            localStorage.removeItem('userType');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

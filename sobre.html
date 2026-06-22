@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeCare · Sobre Nós</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0b2b40;
+            --primary-light: #1a4b66;
+            --secondary: #3a7ca5;
+            --gray-100: #f5f8fa;
+            --gray-200: #e9edf0;
+            --gray-300: #cbd5dc;
+            --gray-600: #4a5b66;
+            --gray-800: #1f2a33;
+            --white: #ffffff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 30px rgba(0, 20, 30, 0.08);
+            --shadow-lg: 0 20px 50px rgba(0, 20, 30, 0.12);
+            --radius: 12px;
+            --transition: 0.25s ease;
+            --green: #27ae60;
+            --red: #e74c3c;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+            background-color: rgba(255, 255, 255, 0.92);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .logo i {
+            color: var(--secondary);
+            font-size: 1.8rem;
+        }
+        .logo-subtitle {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            letter-spacing: 0.3px;
+            background: var(--gray-200);
+            padding: 2px 12px;
+            border-radius: 40px;
+            margin-left: 6px;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-list a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        .nav-list a:hover {
+            color: var(--primary);
+        }
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        .nav-list a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .nav-list a.active::after {
+            width: 100%;
+        }
+        .nav-list .btn-cadastro {
+            background: var(--primary);
+            color: white !important;
+            padding: 6px 18px;
+            border-radius: 40px;
+            transition: var(--transition);
+        }
+        .nav-list .btn-cadastro:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        .nav-list .btn-cadastro::after {
+            display: none;
+        }
+
+        #painelMenu {
+            display: none;
+        }
+
+        /* ===== PAGE HEAD ===== */
+        .page-head {
+            padding: 32px 0 20px;
+        }
+        .page-head h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .page-head h1 i {
+            color: var(--secondary);
+            font-size: 2.4rem;
+        }
+        .page-head .subhead {
+            font-size: 1.15rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            margin-top: 6px;
+        }
+
+        /* ===== SOBRE COMPLETO ===== */
+        .about-section {
+            padding: 20px 0 48px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin: 36px 0;
+        }
+
+        .about-text h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        .about-text h2 i {
+            color: var(--secondary);
+            margin-right: 12px;
+        }
+        .about-text p {
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius);
+            padding: 48px 36px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 300px;
+        }
+        .about-image .icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+        .about-image h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .about-image p {
+            opacity: 0.85;
+            max-width: 400px;
+        }
+
+        /* ===== MISSÃO VISÃO VALORES ===== */
+        .mvv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            margin: 24px 0 48px;
+        }
+
+        .mvv-card {
+            background: var(--white);
+            padding: 28px 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            border-top: 4px solid var(--secondary);
+            text-align: center;
+            transition: var(--transition);
+        }
+        .mvv-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .mvv-card .icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .mvv-card h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        .mvv-card p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* ===== VALORES EM CARDS ===== */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .value-card {
+            background: var(--white);
+            padding: 28px 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .value-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--secondary);
+        }
+        .value-card .icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .value-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .value-card p {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        /* ===== EQUIPE ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .team-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+            transition: var(--transition);
+        }
+        .team-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .team-card .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        .team-card h4 {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+        .team-card p {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        /* ===== DEPOIMENTOS ===== */
+        .depoimentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .depoimento-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+        }
+        .depoimento-card .stars {
+            color: #f1c40f;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .depoimento-card .text {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        .depoimento-card .author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .depoimento-card .role {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        /* ===== CTA ===== */
+        .cta-block {
+            background: linear-gradient(145deg, var(--primary), #123b54);
+            border-radius: var(--radius);
+            padding: 44px 48px;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow-lg);
+        }
+        .cta-block .cta-text h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        .cta-block .cta-text p {
+            opacity: 0.85;
+            font-size: 1rem;
+            max-width: 500px;
+        }
+        .btn-cta {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .btn-cta:hover {
+            background: var(--gray-100);
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 28px 0;
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        .footer span {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .nav-list {
+                gap: 12px;
+                justify-content: center;
+            }
+            .page-head h1 {
+                font-size: 2rem;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .mvv-grid {
+                grid-template-columns: 1fr;
+            }
+            .cta-block {
+                flex-direction: column;
+                text-align: center;
+                padding: 32px 24px;
+            }
+            .cta-block .cta-text p {
+                max-width: 100%;
+            }
+            .values-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .depoimentos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-head h1 {
+                font-size: 1.7rem;
+            }
+            .page-head .subhead {
+                font-size: 1rem;
+                padding-left: 16px;
+            }
+            .btn-cta {
+                width: 100%;
+                justify-content: center;
+            }
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i> HomeCare
+                <span class="logo-subtitle">SafeLife</span>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="servicos.html"><i class="fas fa-briefcase"></i> Serviços</a></li>
+                    <li><a href="sobre.html" class="active"><i class="fas fa-users"></i> Sobre</a></li>
+                    <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+                    
+                    <li id="painelMenu">
+                        <a href="painel-cuidador.html" id="painelLink"><i class="fas fa-clipboard-list"></i> Painel</a>
+                    </li>
+                    
+                    <li id="loginMenu"><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li id="logoutMenu" style="display: none;">
+                        <a href="#" onclick="logout()" style="color: var(--red);">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                    <li><a href="cadastro.html" class="btn-cadastro"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== CONTEÚDO COMPLETO ===== -->
+    <main class="about-section">
+        <div class="container">
+            <div class="page-head">
+                <h1>
+                    <i class="fas fa-users"></i> Sobre Nós
+                </h1>
+                <div class="subhead">
+                    Conheça a HomeCare, nossa missão, valores e a equipe que faz a diferença na vida de nossos pacientes.
+                </div>
+            </div>
+
+            <!-- Grid Sobre -->
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2><i class="fas fa-heartbeat"></i> Quem Somos</h2>
+                    <p>
+                        A <strong>HomeCare</strong> é uma empresa dedicada a oferecer cuidados de saúde de excelência no conforto do lar. 
+                        Fundada com o propósito de humanizar o atendimento médico, nossa equipe é formada por profissionais 
+                        altamente qualificados e apaixonados pelo que fazem.
+                    </p>
+                    <p>
+                        Acreditamos que o cuidado vai além do tratamento médico. Por isso, oferecemos um acompanhamento 
+                        completo que considera as necessidades físicas, emocionais e sociais de cada paciente e sua família.
+                    </p>
+                    <p>
+                        Com anos de experiência no mercado, já ajudamos centenas de famílias a proporcionar qualidade de vida 
+                        e bem-estar para seus entes queridos, sempre com ética, transparência e muito carinho.
+                    </p>
+                </div>
+
+                <div class="about-image">
+                    <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>+10 anos de experiência</h3>
+                    <p>Atendendo com excelência e humanização em cuidados domiciliares.</p>
+                    <div style="margin-top: 20px; display: flex; gap: 24px; flex-wrap: wrap; justify-content: center;">
+                        <div>
+                            <strong style="font-size: 2rem; display: block;">500+</strong>
+                            <span style="font-size: 0.85rem; opacity: 0.8;">Pacientes atendidos</span>
+                        </div>
+                        <div>
+                            <strong style="font-size: 2rem; display: block;">50+</strong>
+                            <span style="font-size: 0.85rem; opacity: 0.8;">Profissionais</span>
+                        </div>
+                        <div>
+                            <strong style="font-size: 2rem; display: block;">98%</strong>
+                            <span style="font-size: 0.85rem; opacity: 0.8;">Satisfação</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Missão, Visão, Valores -->
+            <div class="mvv-grid">
+                <div class="mvv-card">
+                    <span class="icon"><i class="fas fa-bullseye"></i></span>
+                    <h3>Missão</h3>
+                    <p>Proporcionar cuidados de saúde de alta qualidade no conforto do lar, promovendo qualidade de vida e bem-estar.</p>
+                </div>
+
+                <div class="mvv-card">
+                    <span class="icon"><i class="fas fa-eye"></i></span>
+                    <h3>Visão</h3>
+                    <p>Ser referência em cuidados domiciliares, reconhecido pela excelência no atendimento e compromisso com a humanização.</p>
+                </div>
+
+                <div class="mvv-card">
+                    <span class="icon"><i class="fas fa-gem"></i></span>
+                    <h3>Valores</h3>
+                    <ul style="list-style: none; color: var(--gray-600); font-size: 0.95rem; text-align: left; padding-left: 20px;">
+                        <li style="padding: 4px 0;">❤️ Humanização</li>
+                        <li style="padding: 4px 0;">⭐ Compromisso com a qualidade</li>
+                        <li style="padding: 4px 0;">🔒 Ética e transparência</li>
+                        <li style="padding: 4px 0;">🤝 Respeito e dignidade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Valores em Cards -->
+            <h2 style="font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-top: 48px; text-align: center;">
+                <i class="fas fa-heart" style="color: var(--secondary);"></i> Nossos Valores
+            </h2>
+            <p style="text-align: center; color: var(--gray-600); max-width: 600px; margin: 0 auto 20px;">
+                Estes são os princípios que guiam todas as nossas ações e decisões.
+            </p>
+            <div class="values-grid">
+                <div class="value-card">
+                    <span class="icon"><i class="fas fa-hand-holding-heart"></i></span>
+                    <h4>Humanização</h4>
+                    <p>Tratamento humanizado e personalizado para cada paciente, respeitando sua individualidade.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon"><i class="fas fa-award"></i></span>
+                    <h4>Qualidade</h4>
+                    <p>Padrões elevados de qualidade em todos os serviços e atendimentos.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon"><i class="fas fa-handshake"></i></span>
+                    <h4>Confiança</h4>
+                    <p>Equipe comprometida com o bem-estar do paciente e a confiança da família.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon"><i class="fas fa-lock"></i></span>
+                    <h4>Ética</h4>
+                    <p>Transparência e ética em todas as nossas ações e relacionamentos.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon"><i class="fas fa-heart"></i></span>
+                    <h4>Empatia</h4>
+                    <p>Compreender e acolher as necessidades emocionais de cada paciente e familiar.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon"><i class="fas fa-users"></i></span>
+                    <h4>Colaboração</h4>
+                    <p>Trabalho em equipe multidisciplinar para o melhor cuidado integral.</p>
+                </div>
+            </div>
+
+            <!-- Equipe -->
+            <h2 style="font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-top: 48px; text-align: center;">
+                <i class="fas fa-user-md" style="color: var(--secondary);"></i> Nossa Equipe
+            </h2>
+            <p style="text-align: center; color: var(--gray-600); max-width: 600px; margin: 0 auto 20px;">
+                Profissionais dedicados e apaixonados por cuidar de pessoas.
+            </p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="avatar"><i class="fas fa-user-md"></i></div>
+                    <h4>Dra. Ana Silva</h4>
+                    <p>Enfermeira Geriátrica</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><i class="fas fa-user-md"></i></div>
+                    <h4>Dr. Carlos Santos</h4>
+                    <p>Médico Geriatra</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><i class="fas fa-user-md"></i></div>
+                    <h4>Dra. Mariana Costa</h4>
+                    <p>Psicóloga</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><i class="fas fa-user-md"></i></div>
+                    <h4>Dr. Roberto Lima</h4>
+                    <p>Fisioterapeuta</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><i class="fas fa-user-md"></i></div>
+                    <h4>Dra. Fernanda Souza</h4>
+                    <p>Nutricionista</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><i class="fas fa-user-md"></i></div>
+                    <h4>Dr. Paulo Oliveira</h4>
+                    <p>Enfermeiro</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><i class="fas fa-user-md"></i></div>
+                    <h4>Dra. Beatriz Lima</h4>
+                    <p>Terapeuta Ocupacional</p>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><i class="fas fa-user-md"></i></div>
+                    <h4>Dr. Lucas Ferreira</h4>
+                    <p>Fonoaudiólogo</p>
+                </div>
+            </div>
+
+            <!-- Depoimentos -->
+            <h2 style="font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-top: 48px; text-align: center;">
+                <i class="fas fa-quote-left" style="color: var(--secondary);"></i> Depoimentos
+            </h2>
+            <p style="text-align: center; color: var(--gray-600); max-width: 600px; margin: 0 auto 20px;">
+                O que nossos pacientes e familiares dizem sobre nós.
+            </p>
+            <div class="depoimentos-grid">
+                <div class="depoimento-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="text">"O cuidado da HomeCare transformou a vida do meu pai. Profissionais atenciosos e dedicados. Recomendo de olhos fechados!"</div>
+                    <div class="author">Carlos Silva</div>
+                    <div class="role">Familiar de paciente</div>
+                </div>
+                <div class="depoimento-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="text">"Excelente atendimento! Minha mãe se sente em casa e eu tenho tranquilidade sabendo que ela está bem cuidada."</div>
+                    <div class="author">Maria Oliveira</div>
+                    <div class="role">Familiar de paciente</div>
+                </div>
+                <div class="depoimento-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="text">"A equipe da HomeCare é fantástica! Profissionais competentes e muito humanos. Fizeram toda a diferença na recuperação do meu pai."</div>
+                    <div class="author">Ana Santos</div>
+                    <div class="role">Familiar de paciente</div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-block">
+                <div class="cta-text">
+                    <h2><i class="fas fa-phone" style="margin-right: 12px;"></i>Quer saber mais sobre nós?</h2>
+                    <p>Entre em contato e descubra como podemos ajudar você ou sua família com nossos cuidados especializados.</p>
+                </div>
+                <a href="contato.html" class="btn-cta">
+                    <i class="fas fa-arrow-right"></i> Fale Conosco
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 <span>HomeCare</span> · Cuidado que transforma vidas</p>
+            <p style="font-size: 0.8rem; margin-top: 4px; opacity: 0.7;">
+                <i class="fas fa-map-pin" style="margin-right: 4px;"></i> Atendimento humanizado · Excelência em cuidados
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+            const userType = localStorage.getItem('userType');
+            
+            const painelMenu = document.getElementById('painelMenu');
+            const loginMenu = document.getElementById('loginMenu');
+            const logoutMenu = document.getElementById('logoutMenu');
+            const painelLink = document.getElementById('painelLink');
+
+            if (isLoggedIn) {
+                if (painelMenu) painelMenu.style.display = 'block';
+                if (painelLink) {
+                    if (userType === 'cuidador') {
+                        painelLink.href = 'painel-cuidador.html';
+                        painelLink.innerHTML = '<i class="fas fa-clipboard-list"></i> Painel do Cuidador';
+                    } else if (userType === 'paciente') {
+                        painelLink.href = 'paciente-visualizacao.html';
+                        painelLink.innerHTML = '<i class="fas fa-clipboard-list"></i> Meu Acompanhamento';
+                    }
+                }
+                if (loginMenu) loginMenu.style.display = 'none';
+                if (logoutMenu) logoutMenu.style.display = 'block';
+            } else {
+                if (painelMenu) painelMenu.style.display = 'none';
+                if (loginMenu) loginMenu.style.display = 'block';
+                if (logoutMenu) logoutMenu.style.display = 'none';
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('userLoggedIn');
+            localStorage.removeItem('userType');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

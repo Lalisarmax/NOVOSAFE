@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeCare · Meu Acompanhamento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0b2b40;
+            --primary-light: #1a4b66;
+            --secondary: #3a7ca5;
+            --green: #27ae60;
+            --gray-100: #f5f8fa;
+            --gray-200: #e9edf0;
+            --gray-300: #cbd5dc;
+            --gray-600: #4a5b66;
+            --gray-800: #1f2a33;
+            --white: #ffffff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 30px rgba(0, 20, 30, 0.08);
+            --shadow-lg: 0 20px 50px rgba(0, 20, 30, 0.12);
+            --radius: 12px;
+            --transition: 0.25s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+            background-color: rgba(255, 255, 255, 0.92);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .logo i {
+            color: var(--secondary);
+            font-size: 1.8rem;
+        }
+        .logo-subtitle {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            letter-spacing: 0.3px;
+            background: var(--gray-200);
+            padding: 2px 12px;
+            border-radius: 40px;
+            margin-left: 6px;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-list a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        .nav-list a:hover {
+            color: var(--primary);
+        }
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        .nav-list a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .nav-list a.active::after {
+            width: 100%;
+        }
+        .nav-list .btn-cadastro {
+            background: var(--primary);
+            color: white !important;
+            padding: 6px 18px;
+            border-radius: 40px;
+            transition: var(--transition);
+        }
+        .nav-list .btn-cadastro:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        .nav-list .btn-cadastro::after {
+            display: none;
+        }
+
+        /* ===== MENU PAINEL (oculto por padrão) ===== */
+        #painelMenu {
+            display: none;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gray-100);
+            padding: 6px 16px 6px 12px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-800);
+            border: 1px solid var(--gray-200);
+        }
+        .user-badge i {
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+        /* ===== CONTEÚDO ===== */
+        .content {
+            flex: 1;
+            padding: 32px 0 48px;
+        }
+
+        .content-header {
+            margin-bottom: 32px;
+        }
+
+        .content-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .content-header h1 i {
+            color: var(--secondary);
+            margin-right: 12px;
+        }
+        .content-header .subtitle {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            border-left: 4px solid var(--secondary);
+            padding-left: 16px;
+            margin-top: 8px;
+        }
+
+        /* ===== CARD DE PROGRESSO ===== */
+        .progress-card {
+            background: var(--white);
+            padding: 28px 32px;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+        }
+
+        .progress-card h3 {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        .progress-bar-container .label {
+            font-weight: 500;
+            color: var(--gray-600);
+            min-width: 120px;
+            font-size: 0.9rem;
+        }
+        .progress-bar {
+            flex: 1;
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: 40px;
+            overflow: hidden;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            border-radius: 40px;
+            transition: width 0.8s ease;
+        }
+        .fill.green { background: var(--green); }
+        .fill.blue { background: var(--secondary); }
+        .fill.yellow { background: #f39c12; }
+
+        .progress-bar-container .value {
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 45px;
+            color: var(--gray-800);
+        }
+
+        /* ===== ANOTAÇÕES ===== */
+        .notes-section {
+            display: grid;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .note-item {
+            background: var(--white);
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--secondary);
+            border: 1px solid var(--gray-200);
+            border-left-width: 4px;
+            transition: var(--transition);
+        }
+        .note-item:hover {
+            box-shadow: var(--shadow-sm);
+        }
+        .note-item .date {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+        .note-item .title {
+            font-weight: 600;
+            color: var(--primary);
+            margin: 4px 0;
+        }
+        .note-item .text {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        .note-item .badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+        .badge.info { background: #cce5ff; color: #004085; }
+        .badge.success { background: #d4edda; color: #155724; }
+        .badge.warning { background: #fff3cd; color: #856404; }
+
+        .lock-info {
+            background: var(--gray-100);
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 0.85rem;
+            border: 1px dashed var(--gray-300);
+            margin-top: 16px;
+        }
+        .lock-info i {
+            color: var(--secondary);
+            margin-right: 8px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 28px 0;
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        .footer span {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .nav-list {
+                gap: 12px;
+                justify-content: center;
+            }
+            .content-header h1 {
+                font-size: 1.5rem;
+            }
+            .progress-bar-container {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .progress-bar-container .label {
+                min-width: 100%;
+                font-size: 0.85rem;
+            }
+            .progress-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-header h1 {
+                font-size: 1.3rem;
+            }
+            .progress-card {
+                padding: 16px;
+            }
+            .note-item {
+                padding: 12px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i> HomeCare
+                <span class="logo-subtitle">SafeLife</span>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="servicos.html"><i class="fas fa-briefcase"></i> Serviços</a></li>
+                    <li><a href="index.html#sobre"><i class="fas fa-users"></i> Sobre</a></li>
+                    <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+                    
+                    <!-- ========================================================== -->
+                    <!-- PAINEL - SÓ APARECE SE O USUÁRIO ESTIVER LOGADO              -->
+                    <!-- ========================================================== -->
+                    <li id="painelMenu">
+                        <a href="paciente-visualizacao.html" class="active" id="painelLink">
+                            <i class="fas fa-clipboard-list"></i> Meu Acompanhamento
+                        </a>
+                    </li>
+                    
+                    <li id="loginMenu"><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li id="logoutMenu" style="display: none;">
+                        <a href="#" onclick="logout()" style="color: #e74c3c;">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </a>
+                    </li>
+                    <li><a href="cadastro.html" class="btn-cadastro"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========================================================== -->
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <!-- ========================================================== -->
+    <main class="content">
+        <div class="container">
+            <div class="content-header">
+                <h1><i class="fas fa-heartbeat"></i> Meu Acompanhamento</h1>
+                <div class="subtitle">
+                    Acompanhe seu progresso e visualize as anotações das suas sessões de tratamento.
+                </div>
+            </div>
+
+            <!-- ===== PROGRESSO ===== -->
+            <div class="progress-card">
+                <h3><i class="fas fa-chart-simple" style="color: var(--secondary);"></i> Meu Progresso</h3>
+                
+                <div class="progress-bar-container">
+                    <span class="label">Desenvolvimento Físico</span>
+                    <div class="progress-bar">
+                        <div class="fill green" style="width: 70%;"></div>
+                    </div>
+                    <span class="value">70%</span>
+                </div>
+
+                <div class="progress-bar-container">
+                    <span class="label">Desenvolvimento Cognitivo</span>
+                    <div class="progress-bar">
+                        <div class="fill blue" style="width: 60%;"></div>
+                    </div>
+                    <span class="value">60%</span>
+                </div>
+
+                <div class="progress-bar-container">
+                    <span class="label">Desenvolvimento Emocional</span>
+                    <div class="progress-bar">
+                        <div class="fill yellow" style="width: 80%;"></div>
+                    </div>
+                    <span class="value">80%</span>
+                </div>
+
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-200); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+                    <span style="font-size: 0.9rem; color: var(--gray-600);">
+                        <i class="fas fa-calendar-check" style="color: var(--secondary);"></i>
+                        Última atualização: 22/06/2026
+                    </span>
+                    <span style="font-size: 0.9rem; color: var(--gray-600);">
+                        <i class="fas fa-star" style="color: #f1c40f;"></i>
+                        Avaliação Geral: <strong style="color: var(--green);">Bom Progresso</strong>
+                    </span>
+                </div>
+            </div>
+
+            <!-- ===== ANOTAÇÕES DAS SESSÕES ===== -->
+            <div class="progress-card">
+                <h3><i class="fas fa-notes-medical" style="color: var(--secondary);"></i> Anotações das Sessões</h3>
+                <p style="color: var(--gray-600); font-size: 0.9rem; margin-bottom: 16px;">
+                    Aqui você pode visualizar todas as anotações feitas pelo seu cuidador durante as sessões de tratamento.
+                </p>
+
+                <div class="notes-section">
+                    <div class="note-item">
+                        <div class="date">22/06/2026 · 14:00</div>
+                        <div class="title">Sessão de Fisioterapia</div>
+                        <div class="text">
+                            Exercícios de equilíbrio realizados com sucesso. Paciente demonstrou melhora na marcha e maior estabilidade durante os movimentos. Recomenda-se continuar com os exercícios em casa.
+                        </div>
+                        <span class="badge success">Concluído</span>
+                    </div>
+
+                    <div class="note-item">
+                        <div class="date">20/06/2026 · 10:30</div>
+                        <div class="title">Avaliação Geriátrica</div>
+                        <div class="text">
+                            Revisão de medicamentos realizada. Pressão arterial controlada. Paciente apresenta boa resposta ao tratamento atual.
+                        </div>
+                        <span class="badge info">Registrado</span>
+                    </div>
+
+                    <div class="note-item">
+                        <div class="date">18/06/2026 · 15:00</div>
+                        <div class="title">Sessão de Terapia Cognitiva</div>
+                        <div class="text">
+                            Exercícios de memória realizados. Paciente apresentou melhora na recordação de curto prazo. Recomenda-se repetição dos exercícios diariamente.
+                        </div>
+                        <span class="badge success">Concluído</span>
+                    </div>
+
+                    <div class="note-item">
+                        <div class="date">15/06/2026 · 09:00</div>
+                        <div class="title">Consulta de Acompanhamento</div>
+                        <div class="text">
+                            Discussão sobre progresso com a família. Plano de cuidados ajustado para melhor atender às necessidades do paciente.
+                        </div>
+                        <span class="badge warning">Pendente</span>
+                    </div>
+                </div>
+
+                <div class="lock-info">
+                    <i class="fas fa-lock"></i>
+                    Apenas o cuidador responsável pode adicionar novas anotações. Esta é uma visualização apenas para acompanhamento.
+                </div>
+            </div>
+
+            <!-- ===== INFORMAÇÕES DE CONTATO ===== -->
+            <div class="progress-card">
+                <h3><i class="fas fa-info-circle" style="color: var(--secondary);"></i> Informações do Cuidador</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <span style="font-size: 0.85rem; color: var(--gray-600);">Cuidador Responsável</span>
+                        <p style="font-weight: 600; color: var(--primary);">Dra. Ana Silva</p>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.85rem; color: var(--gray-600);">Especialidade</span>
+                        <p style="font-weight: 600; color: var(--primary);">Enfermagem Geriátrica</p>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.85rem; color: var(--gray-600);">Telefone</span>
+                        <p style="font-weight: 600; color: var(--primary);">(11) 99999-7777</p>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.85rem; color: var(--gray-600);">E-mail</span>
+                        <p style="font-weight: 600; color: var(--primary);">ana.silva@homecare.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 <span>HomeCare</span> · Cuidado que transforma vidas</p>
+        </div>
+    </footer>
+
+    <!-- ========================================================== -->
+    <!-- ===== SCRIPTS ===== -->
+    <!-- ========================================================== -->
+    <script>
+        // =============================================================
+        // 1. VERIFICAÇÃO DE ACESSO - SÓ PACIENTE PODE ENTRAR AQUI
+        //    Coloque ESTE CÓDIGO no topo do script, ANTES de tudo
+        // =============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+            const userType = localStorage.getItem('userType');
+            
+            // Se NÃO estiver logado OU não for paciente, redireciona para o login
+            if (!isLoggedIn || userType !== 'paciente') {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // =============================================================
+        // 2. MENU DINÂMICO - Mostra/esconde opções baseado no login
+        // =============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+            const userType = localStorage.getItem('userType');
+            
+            const painelMenu = document.getElementById('painelMenu');
+            const loginMenu = document.getElementById('loginMenu');
+            const logoutMenu = document.getElementById('logoutMenu');
+            const painelLink = document.getElementById('painelLink');
+
+            if (isLoggedIn) {
+                // Mostra o menu do painel
+                if (painelMenu) painelMenu.style.display = 'block';
+                
+                // Ajusta o texto do link do painel
+                if (painelLink) {
+                    if (userType === 'cuidador') {
+                        painelLink.href = 'painel-cuidador.html';
+                        painelLink.innerHTML = '<i class="fas fa-clipboard-list"></i> Painel do Cuidador';
+                    } else if (userType === 'paciente') {
+                        painelLink.href = 'paciente-visualizacao.html';
+                        painelLink.innerHTML = '<i class="fas fa-clipboard-list"></i> Meu Acompanhamento';
+                    }
+                }
+                
+                // Esconde Login, mostra Sair
+                if (loginMenu) loginMenu.style.display = 'none';
+                if (logoutMenu) logoutMenu.style.display = 'block';
+            } else {
+                // Esconde Painel, mostra Login
+                if (painelMenu) painelMenu.style.display = 'none';
+                if (loginMenu) loginMenu.style.display = 'block';
+                if (logoutMenu) logoutMenu.style.display = 'none';
+            }
+        });
+
+        // =============================================================
+        // 3. FUNÇÃO DE LOGOUT
+        // =============================================================
+        function logout() {
+            localStorage.removeItem('userLoggedIn');
+            localStorage.removeItem('userType');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

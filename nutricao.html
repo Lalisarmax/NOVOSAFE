@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeCare · Nutrição</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0b2b40;
+            --primary-light: #1a4b66;
+            --secondary: #3a7ca5;
+            --gray-100: #f5f8fa;
+            --gray-200: #e9edf0;
+            --gray-300: #cbd5dc;
+            --gray-600: #4a5b66;
+            --gray-800: #1f2a33;
+            --white: #ffffff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 30px rgba(0, 20, 30, 0.08);
+            --shadow-lg: 0 20px 50px rgba(0, 20, 30, 0.12);
+            --radius: 12px;
+            --transition: 0.25s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+            background-color: rgba(255, 255, 255, 0.92);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.65rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .logo i {
+            color: var(--secondary);
+            font-size: 1.8rem;
+        }
+        .logo-subtitle {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            letter-spacing: 0.3px;
+            background: var(--gray-200);
+            padding: 2px 12px;
+            border-radius: 40px;
+            margin-left: 6px;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-list a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        .nav-list a:hover {
+            color: var(--primary);
+        }
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        .nav-list a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .nav-list a.active::after {
+            width: 100%;
+        }
+        .nav-list .btn-cadastro {
+            background: var(--primary);
+            color: white !important;
+            padding: 6px 18px;
+            border-radius: 40px;
+            transition: var(--transition);
+        }
+        .nav-list .btn-cadastro:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        .nav-list .btn-cadastro::after {
+            display: none;
+        }
+
+        .page-head {
+            padding: 32px 0 20px;
+        }
+        .page-head h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .page-head h1 i {
+            color: var(--secondary);
+            font-size: 2.4rem;
+        }
+        .page-head .subhead {
+            font-size: 1.15rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            margin-top: 6px;
+        }
+
+        .service-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            margin: 36px 0 48px;
+        }
+
+        .detail-card {
+            background: var(--white);
+            padding: 28px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.02);
+            transition: var(--transition);
+        }
+        .detail-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gray-200);
+        }
+        .detail-card .card-icon {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 16px;
+        }
+        .detail-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .detail-card ul {
+            list-style: none;
+        }
+        .detail-card ul li {
+            padding: 6px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .detail-card ul li:last-child {
+            border-bottom: none;
+        }
+        .detail-card ul li i {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            margin-top: 4px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-weight: 500;
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+            padding-bottom: 4px;
+        }
+        .back-link:hover {
+            color: var(--primary);
+            border-bottom-color: var(--secondary);
+        }
+
+        .cta-block {
+            background: linear-gradient(145deg, var(--primary), #123b54);
+            border-radius: var(--radius);
+            padding: 44px 48px;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin: 24px 0 20px;
+            box-shadow: var(--shadow-lg);
+        }
+        .cta-block .cta-text h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        .cta-block .cta-text p {
+            opacity: 0.85;
+            font-size: 1rem;
+            max-width: 500px;
+        }
+        .btn-cta {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .btn-cta:hover {
+            background: var(--gray-100);
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            padding: 28px 0;
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        .footer span {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .nav-list {
+                gap: 16px;
+                justify-content: center;
+            }
+            .page-head h1 {
+                font-size: 2rem;
+            }
+            .cta-block {
+                flex-direction: column;
+                text-align: center;
+                padding: 32px 24px;
+            }
+            .cta-block .cta-text p {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-head h1 {
+                font-size: 1.7rem;
+            }
+            .page-head .subhead {
+                font-size: 1rem;
+                padding-left: 16px;
+            }
+            .btn-cta {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i> HomeCare
+                <span class="logo-subtitle">SafeLife</span>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="servicos.html" class="active"><i class="fas fa-briefcase"></i> Serviços</a></li>
+                    <li><a href="index.html#sobre"><i class="fas fa-users"></i> Sobre</a></li>
+                    <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="cadastro.html" class="btn-cadastro"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="servicos.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Voltar aos Serviços
+        </a>
+
+        <div class="page-head">
+            <h1>
+                <i class="fas fa-utensils"></i> Nutrição
+            </h1>
+            <div class="subhead">
+                Acompanhamento nutricional personalizado para promover saúde e bem-estar através da alimentação.
+            </div>
+        </div>
+
+        <div class="service-details">
+            <div class="detail-card">
+                <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+                <h3>Avaliação Nutricional</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Avaliação antropométrica</li>
+                    <li><i class="fas fa-check-circle"></i> Análise de composição corporal</li>
+                    <li><i class="fas fa-check-circle"></i> Avaliação de hábitos alimentares</li>
+                    <li><i class="fas fa-check-circle"></i> Identificação de deficiências nutricionais</li>
+                    <li><i class="fas fa-check-circle"></i> Plano alimentar personalizado</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <div class="card-icon"><i class="fas fa-heart"></i></div>
+                <h3>Nutrição Clínica</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Diabetes e pré-diabetes</li>
+                    <li><i class="fas fa-check-circle"></i> Hipertensão arterial</li>
+                    <li><i class="fas fa-check-circle"></i> Doenças cardiovasculares</li>
+                    <li><i class="fas fa-check-circle"></i> Doenças renais</li>
+                    <li><i class="fas fa-check-circle"></i> Desnutrição e sarcopenia</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <div class="card-icon"><i class="fas fa-user-md"></i></div>
+                <h3>Nutrição para Idosos</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Adaptação de textura de alimentos</li>
+                    <li><i class="fas fa-check-circle"></i> Suplementação nutricional</li>
+                    <li><i class="fas fa-check-circle"></i> Estimulação do apetite</li>
+                    <li><i class="fas fa-check-circle"></i> Prevenção de desnutrição</li>
+                    <li><i class="fas fa-check-circle"></i> Dietas para condições específicas</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <div class="card-icon"><i class="fas fa-clock"></i></div>
+                <h3>Benefícios</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Melhora da qualidade de vida</li>
+                    <li><i class="fas fa-check-circle"></i> Controle de doenças crônicas</li>
+                    <li><i class="fas fa-check-circle"></i> Fortalecimento do sistema imunológico</li>
+                    <li><i class="fas fa-check-circle"></i> Aumento de energia e disposição</li>
+                    <li><i class="fas fa-check-circle"></i> Prevenção de complicações</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <div class="card-icon"><i class="fas fa-users"></i></div>
+                <h3>Equipe</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Nutricionistas especializados</li>
+                    <li><i class="fas fa-check-circle"></i> Nutrólogos</li>
+                    <li><i class="fas fa-check-circle"></i> Especialistas em nutrição clínica</li>
+                    <li><i class="fas fa-check-circle"></i> Equipe multidisciplinar</li>
+                    <li><i class="fas fa-check-circle"></i> Supervisão médica</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <div class="card-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3>Abordagem</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Atendimento individualizado</li>
+                    <li><i class="fas fa-check-circle"></i> Orientações práticas para o dia a dia</li>
+                    <li><i class="fas fa-check-circle"></i> Acompanhamento contínuo</li>
+                    <li><i class="fas fa-check-circle"></i> Adaptação às preferências alimentares</li>
+                    <li><i class="fas fa-check-circle"></i> Integração com outros profissionais</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta-block">
+            <div class="cta-text">
+                <h2><i class="fas fa-calendar-check" style="margin-right: 12px;"></i>Precisa de orientação nutricional?</h2>
+                <p>Agende uma consulta com nossa equipe de nutrição e comece a transformar sua saúde através da alimentação.</p>
+            </div>
+            <a href="agendar-consulta.html" class="btn-cta">
+                <i class="fas fa-arrow-right"></i> Agendar Consulta
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 <span>HomeCare</span> · Cuidado que transforma vidas</p>
+        </div>
+    </footer>
+    <!-- Menu com verificação de login -->
+<nav>
+    <ul class="nav-list">
+        <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+        <li><a href="servicos.html"><i class="fas fa-briefcase"></i> Serviços</a></li>
+        <li><a href="index.html#sobre"><i class="fas fa-users"></i> Sobre</a></li>
+        <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+        
+        <!-- Painel - SÓ APARECE SE ESTIVER LOGADO -->
+        <li id="painelMenu" style="display: none;">
+            <a href="painel-cuidador.html" id="painelLink"><i class="fas fa-clipboard-list"></i> Painel</a>
+        </li>
+        
+        <li id="loginMenu"><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <li id="logoutMenu" style="display: none;">
+            <a href="#" onclick="logout()" style="color: var(--red);">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </a>
+        </li>
+        <li><a href="cadastro.html" class="btn-cadastro"><i class="fas fa-user-plus"></i> Cadastrar</a></li>
+    </ul>
+</nav>
+
+<script>
+    // Verifica se o usuário está logado ao carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+        const userType = localStorage.getItem('userType');
+        
+        if (isLoggedIn) {
+            // Mostra o menu do painel
+            document.getElementById('painelMenu').style.display = 'block';
+            
+            // Redireciona para o painel correto
+            const painelLink = document.getElementById('painelLink');
+            if (userType === 'cuidador') {
+                painelLink.href = 'painel-cuidador.html';
+                painelLink.innerHTML = '<i class="fas fa-clipboard-list"></i> Painel do Cuidador';
+            } else if (userType === 'paciente') {
+                painelLink.href = 'paciente-visualizacao.html';
+                painelLink.innerHTML = '<i class="fas fa-clipboard-list"></i> Meu Acompanhamento';
+            }
+            
+            // Esconde Login, mostra Sair
+            document.getElementById('loginMenu').style.display = 'none';
+            document.getElementById('logoutMenu').style.display = 'block';
+        }
+    });
+
+    function logout() {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('userType');
+        window.location.href = 'index.html';
+    }
+</script>
+</body>
+</html>
