@@ -415,7 +415,57 @@
             }
         }
     </style>
-</head>
+</head
+
+    <script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
+    const tipoConta = document.getElementById('tipoConta').value;
+    const alertDiv = document.getElementById('alert');
+    const alertMessage = document.getElementById('alertMessage');
+    
+    const btn = document.querySelector('.btn-login');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Entrando...';
+    btn.disabled = true;
+    
+    const resultado = await loginUsuario(email, senha);
+    
+    if (resultado.success) {
+        const userData = await getUsuarioData(resultado.user.uid);
+        
+        if (userData.success) {
+            const tipo = userData.data.tipo;
+            
+            if (tipo !== tipoConta) {
+                alert('Tipo de conta incorreto. Você é ' + tipo);
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+                btn.disabled = false;
+                return;
+            }
+            
+            localStorage.setItem('userLoggedIn', 'true');
+            localStorage.setItem('userType', tipo);
+            localStorage.setItem('userUid', resultado.user.uid);
+            localStorage.setItem('userName', userData.data.nome);
+            
+            if (tipo === 'cuidador') {
+                window.location.href = 'painel-cuidador.html';
+            } else {
+                window.location.href = 'paciente-visualizacao.html';
+            }
+        }
+    } else {
+        alertDiv.className = 'alert error';
+        alertMessage.textContent = 'E-mail ou senha inválidos. Tente novamente.';
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Entrar';
+        btn.disabled = false;
+    }
+});
+</script>
+    
 <body>
     <header class="header">
         <div class="container">
